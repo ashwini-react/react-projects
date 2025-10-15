@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, {useState} from 'react';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const[count, setCount] = useState(0);
+  const[prevCount, setPrevCount] = useState(0);
+  const[history, setHistory] = useState([]);
+  const [isSmartMode, setIsSmartMode] = useState(false);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+  const increment = () => {
+    setPrevCount(count);
+    const newCount = count + 1;
+    setCount(newCount);
+  setHistory([`Incremented from ${count} to ${newCount}`, ...history, ]);
+  }
+
+  const decrement = () => {
+    setPrevCount(count);
+    const newCount = count -1;
+    setCount(newCount);
+  setHistory([`Decremented from ${count} to ${newCount}`, ...history, ]);
+  }
+
+  const reset = () => {
+    setPrevCount(count);
+    const newCount = 0;
+    setCount(newCount);
+    setHistory([`reset from ${count} to ${newCount}`, ...history, ]);
+  }
+
+  const incrementByFive = ()=>{
+    setPrevCount(count);
+    const newCount = count + 5;
+    setCount(newCount);
+    setHistory([`incrementby5 from ${count} to ${newCount}`, ...history, ]);
+  }
+
+  // const save = () => {
+  //   setHistory([count,...history])
+  // }
+
+  const handleToggle = () => {
+    setIsSmartMode(!isSmartMode);
+  }
+
+  return(
+    <div className='counter-app'>
+      <div className="header">
+        <h2 className="title">Smart Counter</h2>
+        <button className={`toggle ${isSmartMode} ? "active" : ""`} onClick={handleToggle}></button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+        <h3>Previous :{prevCount}</h3>
+        <h2>Current :{count} </h2>
+        <div className="buttons">
+          <button onClick={increment}>Increment</button>
+          <button onClick={decrement}>Decrement</button>
+          <button onClick={reset}>Reset</button>
+          <button onClick={incrementByFive}>Increment by 5</button>
+          <button onClick={() => {setHistory([count, ...history]); }}>Save Count</button>
+        </div>
+        <div className="history">
+          <h3>History</h3>
+          <ul type="none">
+            {
+              history.map((value, index)=>(
+              <li key={index}>{value}</li>
+            ))
+            }
+          </ul>
+        </div>
+    </div>
   )
 }
 
-export default App
+export default App;
