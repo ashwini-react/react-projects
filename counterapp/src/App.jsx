@@ -44,12 +44,12 @@ const App = () => {
   }
 
   return(
-    <div className='counter-app'>
-      <div className="header">
+    <div className={`counter-app  ${isSmartMode ? "dark-mode" : ""}`}>
+      <div className="header"> 
         <h2 className="title">Smart Counter</h2>
-        <button className={`toggle ${isSmartMode} ? "active" : ""`} onClick={handleToggle}></button>
+        <button className={`toggle  ${isSmartMode ? "active" : ""}`} onClick={handleToggle}></button>
       </div>
-        <h3>Previous :{prevCount}</h3>
+        <h3 className="dynamic-text">Previous :{prevCount}</h3>
         <h2>Current :{count} </h2>
         <div className="buttons">
           <button onClick={increment}>Increment</button>
@@ -59,7 +59,7 @@ const App = () => {
           <button onClick={() => {setHistory([count, ...history]); }}>Save Count</button>
         </div>
         <div className="history">
-          <h3>History</h3>
+          <h3 className="fixed-text">History</h3>
           <ul type="none">
             {
               history.map((value, index)=>(
